@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 import React from 'react';
 import './App.css';
 import Note from './Note';
@@ -7,7 +6,6 @@ const App = () => {
   const [anotacoes, setAnotacoes] = React.useState([]);
   const [texto, setTexto] = React.useState('');
 
-  // Inclusão de notas iniciais para primeira vez que utilizar a aplicação
   React.useEffect(() => {
     const notasIniciais = [
       'Seja bem-vindo(a) à aplicação de anotações utilizando Reactjs. Essa aplicação não possui banco de dados então pode utilizar à vontade da forma que precisar. É também uma aplicação para constar em meu portfólio.',
@@ -27,7 +25,6 @@ const App = () => {
     localStorage.setItem('anotacoes', JSON.stringify([...anotacoes, texto]));
   }
 
-  // Lembrar de quando excluir retirar do localStored
   function excluir({ target }) {
     const resultado = window.confirm('Deseja excluir a anotação?');
     if (resultado) {
