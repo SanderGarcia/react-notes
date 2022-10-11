@@ -12,6 +12,27 @@ body {
   height: 100vh;
   overflow-y: auto;
   background: linear-gradient(45deg, #0d5cb6, #4891e4);
+  background-repeat: 100vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0d5cb6; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 .container {
@@ -19,6 +40,9 @@ body {
   flex-wrap: wrap;
   gap: 10px;
   margin: 1rem;
+  padding-bottom: 82px;
+  height: calc(100vh - 167px);
+  overflow-y: auto;
 }
 
 header {
@@ -78,6 +102,7 @@ footer {
   bottom: 0;
   left: 0;
   padding: 1rem;
+  box-shadow: -15px -15px 15px rgba(0, 0, 0, 0.2);
 }
 
 footer input {
