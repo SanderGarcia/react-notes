@@ -1,25 +1,77 @@
-import logo from './logo.svg';
+/* eslint-disable eqeqeq */
+import React from 'react';
 import './App.css';
+import Note from './Note';
 
-function App() {
+const App = () => {
+  const [anotacoes, setAnotacoes] = React.useState([]);
+  const [texto, setTexto] = React.useState('');
+
+  // Inclusão de notas iniciais para primeira vez que utilizar a aplicação
+  React.useEffect(() => {
+    const notasIniciais = [
+      'Seja bem-vindo(a) à aplicação de anotações utilizando Reactjs. Essa aplicação não possui banco de dados então pode utilizar à vontade da forma que precisar. É também uma aplicação para constar em meu portfólio.',
+      'As anotações são gravadas no localStorage do navegador. Portanto suas anotações só funcionarão nesse navegador e dispositivo que está utilizando nesse momento.',
+    ];
+    const notasStored = localStorage.getItem('anotacoes');
+    if (notasStored === null) {
+      localStorage.setItem('anotacoes', JSON.stringify(notasIniciais));
+    }
+    setAnotacoes(JSON.parse(localStorage.getItem('anotacoes')));
+  }, []);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setAnotacoes([...anotacoes, texto]);
+    setTexto('');
+    localStorage.setItem('anotacoes', JSON.stringify([...anotacoes, texto]));
+  }
+
+  // Lembrar de quando excluir retirar do localStored
+  function excluir({ target }) {
+    const resultado = window.confirm('Deseja excluir a anotação?');
+    if (resultado) {
+      const excluir = target.getAttribute('excluir');
+      const novasAnotacoes = anotacoes.filter(
+        (anotacao, index) => index != excluir,
+      );
+      setAnotacoes(novasAnotacoes);
+      localStorage.setItem('anotacoes', JSON.stringify(novasAnotacoes));
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+    <>
+      <header>
+        <span>React Notes</span>
         <a
-          className="App-link"
-          href="https://reactjs.org"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noreferrer"
+          href="https://sandergarcia.github.io"
         >
-          Learn React
+          sandergarcia.github.io
         </a>
       </header>
-    </div>
+
+      <div className="container">
+        {anotacoes && <Note notas={anotacoes} onClick={excluir} />}
+      </div>
+
+      <footer>
+        <form onSubmit={handleSubmit}>
+          <input
+            value={texto}
+            id="description"
+            placeholder="Descrição..."
+            type="text"
+            onChange={({ target }) => setTexto(target.value)}
+            autoFocus
+          />
+          <button>+</button>
+        </form>
+      </footer>
+    </>
   );
-}
+};
 
 export default App;
